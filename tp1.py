@@ -2,11 +2,24 @@ import sys
 from files_handle import obtener_info_batallas
 
 
+def calculo_coeficiente (info):
+    suma = 0
+    fi = 0
+
+    for batalla in info:
+        suma += batalla[0] * (batalla[1] + fi)
+        fi += batalla[1]
+
+    return suma
+
+
 # Algoritmo
 # info es una lista de tuplas de la forma (bi, ti)
 
 def orden_batallas (info):
-    return [], 0
+    info = sorted(info, key=lambda x: x[0] / x[1], reverse=True)
+
+    return [], calculo_coeficiente(info)
 
 
 if __name__ == "__main__":
