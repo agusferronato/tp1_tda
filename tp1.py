@@ -2,30 +2,26 @@ import sys
 from files_handle import obtener_info_batallas
 
 
-def calculo_coeficiente (info):
-    suma = 0
-    fi = 0
+def calculo_coeficiente(batallas: list[tuple[int, int]]) -> int:
+    suma_total: int = 0
+    felicidad_i: int = 0
 
-    for batalla in info:
-        suma += batalla[0] * (batalla[1] + fi)
-        fi += batalla[1]
+    for batalla in batallas:
+        suma_total += batalla[0] * (batalla[1] + felicidad_i)
+        felicidad_i += batalla[1]
 
-    return suma
+    return suma_total
 
 
-# Algoritmo
-# info es una lista de tuplas de la forma (bi, ti)
-
-def orden_batallas (info):
-    info = sorted(info, key=lambda x: x[0] / x[1], reverse=True)
-
-    return [], calculo_coeficiente(info)
+def orden_batallas(info: list[tuple[int, int]]):
+    batllas: list = sorted(info, key=lambda x: x[0] / x[1], reverse=True)
+    return batllas, calculo_coeficiente(batllas)
 
 
 if __name__ == "__main__":
     try:
-        ruta = sys.argv[1]
-        info = obtener_info_batallas(ruta)
+        ruta: str = sys.argv[1]
+        info: list = obtener_info_batallas(ruta)
         print(orden_batallas(info))
     except (FileNotFoundError):
         print("Error: no se ha encontrado el archivo")
