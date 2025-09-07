@@ -1,4 +1,4 @@
-from files_handle import obtener_bi_ti, obtener_coeficiente
+from files_handle import obtener_info_batallas, obtener_coeficiente
 from tp1 import orden_batallas
 
 
@@ -11,10 +11,11 @@ ARCHIVO_RESULTADOS = "Resultados Esperados.txt"
 
 
 def test(archivo):
-    bi, ti = obtener_bi_ti(f'{RUTA}/{archivo}')
+    info = obtener_info_batallas(f'{RUTA}/{archivo}')
 
-    orden, coeficiente = orden_batallas(ti, bi)
+    orden, coeficiente = orden_batallas(info)
     coeficiente_esperado = obtener_coeficiente(archivo,f'{RUTA}/{ARCHIVO_RESULTADOS}')
+
 
     if coeficiente == coeficiente_esperado:
         print(f'\033[92m✅ Test {archivo} paso\033[0m')

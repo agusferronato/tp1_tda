@@ -8,16 +8,14 @@ def obtener_coeficiente(archivo, archivo_resultados):
     archivo_resultados.close()
 
 
-def obtener_bi_ti (archivo, ruta = ""):
-    bi = []
-    ti = []
+def obtener_info_batallas (archivo):
+    info = [] # (bi, ti)
     with open(archivo, "r") as archivo:
         lineas = archivo.readlines()
         lineas.pop(0)
         for linea in lineas:
             linea = linea.split(",")
-            ti.append(int(linea[0]))
-            bi.append(int(linea[1][:-1]))
-    return bi, ti
+            info.append((int(linea[1][:-1]), int(linea[0])))
+    return info
             
 
