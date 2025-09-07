@@ -1,3 +1,6 @@
+import csv
+
+
 def obtener_coeficiente(archivo, archivo_resultados):
     archivo_resultados = open(archivo_resultados, "r")
     for linea in archivo_resultados:
@@ -8,14 +11,11 @@ def obtener_coeficiente(archivo, archivo_resultados):
     archivo_resultados.close()
 
 
-def obtener_info_batallas (archivo):
-    info = [] # (bi, ti)
+def obtener_info_batallas(archivo: str) -> list[tuple[int, int]]:
+    info: list = []
     with open(archivo, "r") as archivo:
-        lineas = archivo.readlines()
-        lineas.pop(0)
-        for linea in lineas:
-            linea = linea.split(",")
-            info.append((int(linea[1][:-1]), int(linea[0])))
+        lector = csv.reader(archivo)
+        next(lector)  # Saltear encabezado
+        for linea in lector:
+            info.append((int(linea[0]), int(linea[1])))
     return info
-            
-
