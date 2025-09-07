@@ -1,18 +1,20 @@
 import sys
-import csv
+from files_handle import obtener_info_batallas
 
 
-def parser(ruta: str) -> list[tuple[int, int]]:
-    datos: list = []
-    with open(ruta, "r") as archivo:
-        lector = csv.reader(archivo)
-        next(lector)  # Saltear el encabezado
-        for fila in lector:
-            datos.append((int(fila[0]), int(fila[1])))
-    return datos
+# Algoritmo
+# info es una lista de tuplas de la forma (bi, ti)
+
+def orden_batallas (info):
+    return [], 0
 
 
 if __name__ == "__main__":
-    datos: list = parser(sys.argv[1])
-    if not datos:
-        print("No se encontraron los datos.")
+    try:
+        ruta = sys.argv[1]
+        info = obtener_info_batallas(ruta)
+        print(orden_batallas(info))
+    except (FileNotFoundError):
+        print("Error: no se ha encontrado el archivo")
+    except (IndexError):
+        print("Error: Debe pasar como primer parametro el nombre del archivo")
