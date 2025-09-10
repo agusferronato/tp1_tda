@@ -21,10 +21,8 @@ def test(archivo):
         print(f'\033[92m✅ Test {archivo} paso\033[0m')
     else:
         print(f'\033[91m❌ Test {archivo} no paso\033[0m')
-        print()
         print(f'Resultado esperado: {coeficiente_esperado}')
         print(f'Resultado obtenido: {coeficiente}')
-    print()
 
 
 if __name__ == "__main__":
