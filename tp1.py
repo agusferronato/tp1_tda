@@ -13,7 +13,7 @@ def calculo_coeficiente(batallas: list[tuple[int, int]]) -> int:
     return suma_total
 
 
-def orden_batallas(info: list[tuple[int, int]]):
+def orden_batallas(info: list[tuple[int, int]]) -> tuple[list, int]:
     batllas: list = sorted(info, key=lambda x: x[0] / x[1], reverse=True)
     return batllas, calculo_coeficiente(batllas)
 
@@ -21,7 +21,7 @@ def orden_batallas(info: list[tuple[int, int]]):
 if __name__ == "__main__":
     try:
         ruta: str = sys.argv[1]
-        info: list = obtener_info_batallas(ruta)
+        info: list[tuple[int, int]] = obtener_info_batallas(ruta)
         print(orden_batallas(info))
     except (FileNotFoundError):
         print("Error: no se ha encontrado el archivo")

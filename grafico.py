@@ -16,7 +16,7 @@ np.random.seed(12345)
 sns.set_theme()
 
 
-def get_random_array(size: int) -> list[tuple[int, int]]:
+def get_random_array(size: int):
     return np.random.randint(10, 1000, size=(size, 2), dtype=np.int64)
 
 

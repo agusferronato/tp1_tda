@@ -11,8 +11,8 @@ def obtener_coeficiente(archivo, archivo_resultados):
     archivo_resultados.close()
 
 
-def obtener_info_batallas(archivo: str) -> list[tuple[int, int]]:
-    info: list = []
+def obtener_info_batallas(archivo) -> list[tuple[int, int]]:
+    info: list[tuple[int, int]] = []
     with open(archivo, "r") as archivo:
         lector = csv.reader(archivo)
         next(lector)  # Saltear encabezado
