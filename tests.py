@@ -1,10 +1,8 @@
-from files_handle import obtener_info_batallas, obtener_coeficiente
+from utils.files_handle import obtener_info_batallas, obtener_coeficiente
 from tp1 import orden_batallas
 
 
 RUTA = "./files"
-
-# ARCHIVOS = ["10.txt", "50.txt"]
 
 ARCHIVOS = ["10.txt", "50.txt", "100.txt", "1000.txt", "5000.txt", "10000.txt", "100000.txt"]
 ARCHIVO_RESULTADOS = "Resultados Esperados.txt"

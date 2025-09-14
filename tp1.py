@@ -1,6 +1,6 @@
 import sys
-from files_handle import obtener_info_batallas
-from format import imprimir_batallas
+from utils.files_handle import obtener_info_batallas
+from utils.format import imprimir_batallas
 
 
 def calculo_coeficiente(batallas: list[tuple[int, int]]) -> int:
@@ -23,7 +23,8 @@ if __name__ == "__main__":
     try:
         ruta: str = sys.argv[1]
         info: list[tuple[int, int]] = obtener_info_batallas(ruta)
-        print(orden_batallas(info))
+        resultado = orden_batallas(info)        
+        imprimir_batallas(batallas=resultado[0], coeficiente=resultado[1])
     except (FileNotFoundError):
         print("Error: no se ha encontrado el archivo")
     except (IndexError):

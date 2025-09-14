@@ -1,11 +1,16 @@
-# Imports necesarios para el notebook
+import sys
+import os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from random import seed
 from tp1 import orden_batallas
+from complejidad.math import n_logn
 from matplotlib import pyplot as plt
 import seaborn as sns
 import numpy as np
 import scipy as sp
-from util import time_algorithm
+from complejidad.util import time_algorithm
 
 
 # Siempre seteamos la seed de aleatoridad para que los
@@ -29,13 +34,13 @@ if __name__ == '__main__':
     results = time_algorithm(orden_batallas, x, lambda s: [get_random_array(s)])
     ax: plt.Axes
     fig, ax = plt.subplots()
-    ax.plot(x, [results[i] for i in x], label="Medición")
+
+
+    ax.scatter(x, [results[i] for i in x], label="Medición")
     ax.set_title('Tiempo de ejecución del algoritmo')
     ax.set_xlabel('Tamaño del array')
     ax.set_ylabel('Tiempo de ejecución (s)')
 
-    def n_logn(n, coeficiente_1, coeficiente_2):
-        return coeficiente_1 * n * np.log(n) + coeficiente_2
 
     c, pcov = sp.optimize.curve_fit(n_logn, x, [results[n] for n in x])
     print(f"c_1 = {c[0]}, c_2 = {c[1]}")
