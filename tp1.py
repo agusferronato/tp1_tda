@@ -3,6 +3,8 @@ from utils.files_handle import obtener_info_batallas
 from utils.format import imprimir_batallas
 
 
+# Algoritmo
+
 def calculo_coeficiente(batallas: list[tuple[int, int]]) -> int:
     suma_total: int = 0
     felicidad_i: int = 0

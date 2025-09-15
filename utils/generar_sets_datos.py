@@ -1,21 +1,36 @@
 import numpy as np
 from random import seed
 import csv
-import os 
+import random
+import os
+from utils.files_handle import obtener_info_batallas
 
 CARPETA = "sets"
 
 
+MIN_VALUE = 10
+MAX_VALUE = 1000
+
+
+def get_random_array(size: int):
+    return np.random.randint(MIN_VALUE, MAX_VALUE, size=(size, 2), dtype=np.int64)
+
+
+def get_array_with_fixed_value(size: int):
+    return np.column_stack((
+        np.random.randint(10, 1000, size=size, dtype=np.int64),
+        np.full(size, 10000, dtype=np.int64)
+    ))
+
+
 def generar_set_aleatorio (tamanio):
 
-    archivo = f'{CARPETA}/{tamanio}.txt'
+    nombre_archivo = f'{CARPETA}/{tamanio}.txt'
 
-    x = np.random.randint(10, 1000, size=(tamanio, 2), dtype=np.int64)
+    x = get_random_array(tamanio)
 
-    with open(archivo, mode='w', newline='') as archivo:
+    with open(nombre_archivo, mode='w', newline='') as archivo:
         writer = csv.writer(archivo)
         writer.writerows(x)
 
-    
-if __name__ == "__main__":
-    generar_set_aleatorio(12000)
+    return nombre_archivo
