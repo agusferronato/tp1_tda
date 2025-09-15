@@ -14,8 +14,11 @@ from complejidad.util import time_algorithm
 from utils.generar_sets_datos import get_random_array, get_array_with_fixed_value
 
 
-seed(12345)
-np.random.seed(12345)
+CANTIDAD_MUESTRAS = 35
+N_MIN = 1000
+N_MAX = 100000
+EJECUCIONES_ERROR = 25
+
 
 sns.set_theme()
 
@@ -23,6 +26,10 @@ sns.set_theme()
 
 def obtener_resultados(sizes, get_array_function):
     return time_algorithm(orden_batallas, sizes, lambda s: [get_array_function(s)])
+
+
+def error_cuadratico_total (results, c, x):
+    return np.sum((c[0] * x * np.log(x) + c[1] - [results[n] for n in x])**2)
 
 
 def graficar (x, results, error = False):
@@ -54,7 +61,7 @@ def graficar (x, results, error = False):
         fig
 
 
-    r = np.sum((c[0] * x * np.log(x) + c[1] - [results[n] for n in x])**2)
+    r = error_cuadratico_total(results, c, x)
 
     print(f"c_1 = {c[0]}, c_2 = {c[1]}")
     print(f"Error cuadrático total: {r}")
@@ -65,12 +72,34 @@ def graficar (x, results, error = False):
 
 
 
+def graficar(sizes, fn):
+
+    results = obtener_resultados(sizes, fn)
+    graficar(sizes, results) # Grafico tiempo de ejecucion
+    graficar(sizes, results, error=True) # Grafico error
+
+
+def error_cuadratico_para_varias_muestras (sizes, fn):
+    max = None
+
+    for i in range(EJECUCIONES_ERROR):
+
+        results = obtener_resultados(sizes, fn)
+        c, pcov = sp.optimize.curve_fit(n_logn, sizes, [results[n] for n in sizes])
+        error = error_cuadratico_total(results, c, sizes)
+        print(f'Error ejecucion {i + 1}: {error}')
+        if max is None or error > max:
+            max = error
+        
+    print(f'Error cuadratico maximo: {max}')
+
+
+
 if __name__ == '__main__':
 
-    sizes: np.ndarray = np.linspace(1000, 100000, 20).astype(int)
-    results = obtener_resultados(sizes, get_array_with_fixed_value)
+    sizes: np.ndarray = np.linspace(N_MIN, N_MAX, CANTIDAD_MUESTRAS).astype(int)
+    
+    error_cuadratico_para_varias_muestras(sizes, get_array_with_fixed_value)
 
-    graficar(sizes, results)
-    graficar(sizes, results, error=True)
 
 
