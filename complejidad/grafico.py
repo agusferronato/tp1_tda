@@ -67,7 +67,7 @@ def graficar(x, results, error=False):
     plt.show()
 
 
-def graficar(sizes, fn):
+def graficar_tiempo_y_error(sizes, fn):
 
     results = obtener_resultados(sizes, fn)
     graficar(sizes, results)  # Grafico tiempo de ejecucion
@@ -93,4 +93,5 @@ if __name__ == '__main__':
 
     sizes: np.ndarray = np.linspace(N_MIN, N_MAX, CANTIDAD_MUESTRAS).astype(int)
 
-    error_cuadratico_para_varias_muestras(sizes, get_array_with_fixed_value)
+    # error_cuadratico_para_varias_muestras(sizes, get_array_with_fixed_value)
+    graficar_tiempo_y_error(sizes, get_array_with_fixed_value)

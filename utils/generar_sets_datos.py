@@ -18,9 +18,8 @@ def get_random_array(size: int):
 
 def get_array_with_fixed_value(size: int):
     return np.column_stack((
-        # np.random.randint(10, 1000, size=size, dtype=np.int64),
-        np.full(size, 10000, dtype=np.int64),
-        np.full(size, 10000, dtype=np.int64)
+        np.random.randint(MIN_VALUE, MAX_VALUE, size=size, dtype=np.int64),
+        np.random.randint(MIN_VALUE, MAX_VALUE, size=size, dtype=np.int64)
     ))
 
 
