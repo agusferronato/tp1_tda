@@ -23,16 +23,15 @@ EJECUCIONES_ERROR = 25
 sns.set_theme()
 
 
-
 def obtener_resultados(sizes, get_array_function):
     return time_algorithm(orden_batallas, sizes, lambda s: [get_array_function(s)])
 
 
-def error_cuadratico_total (results, c, x):
+def error_cuadratico_total(results, c, x):
     return np.sum((c[0] * x * np.log(x) + c[1] - [results[n] for n in x])**2)
 
 
-def graficar (x, results, error = False):
+def graficar(x, results, error=False):
 
     ax: plt.Axes
     fig, ax = plt.subplots()
@@ -55,7 +54,6 @@ def graficar (x, results, error = False):
         ax.set_xlabel('Tamaño del array')
         ax.set_ylabel('Tiempo de ejecución (s)')
 
-
         ax.plot(x, [c[0] * n * np.log(n) + c[1] for n in x], 'r--', label="Ajuste")
         ax.legend()
         fig
@@ -65,21 +63,18 @@ def graficar (x, results, error = False):
 
     print(f"c_1 = {c[0]}, c_2 = {c[1]}")
     print(f"Error cuadrático total: {r}")
-    
 
     plt.show()
-
-
 
 
 def graficar(sizes, fn):
 
     results = obtener_resultados(sizes, fn)
-    graficar(sizes, results) # Grafico tiempo de ejecucion
-    graficar(sizes, results, error=True) # Grafico error
+    graficar(sizes, results)  # Grafico tiempo de ejecucion
+    graficar(sizes, results, error=True)  # Grafico error
 
 
-def error_cuadratico_para_varias_muestras (sizes, fn):
+def error_cuadratico_para_varias_muestras(sizes, fn):
     max = None
 
     for i in range(EJECUCIONES_ERROR):
@@ -90,16 +85,12 @@ def error_cuadratico_para_varias_muestras (sizes, fn):
         print(f'Error ejecucion {i + 1}: {error}')
         if max is None or error > max:
             max = error
-        
-    print(f'Error cuadratico maximo: {max}')
 
+    print(f'Error cuadratico maximo: {max}')
 
 
 if __name__ == '__main__':
 
     sizes: np.ndarray = np.linspace(N_MIN, N_MAX, CANTIDAD_MUESTRAS).astype(int)
-    
+
     error_cuadratico_para_varias_muestras(sizes, get_array_with_fixed_value)
-
-
-
