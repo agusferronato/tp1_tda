@@ -2,3 +2,4 @@ matplotlib
 seaborn
 numpy
 scipy
+PyQt5
