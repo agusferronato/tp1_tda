@@ -1,9 +1,8 @@
-from utils.files_handle import obtener_info_batallas, obtener_coeficiente
-from utils.generar_sets_datos import get_random_array, generar_set_aleatorio
+from utils.archivos import obtener_info_batallas, obtener_coeficiente
 from utils.verificar_resultado_bt import coeficiente
 from tp1 import orden_batallas
 import sys
-
+import random
 
 RUTA_CATEDRA = "./files"
 
@@ -15,8 +14,16 @@ ARCHIVO_RESULTADOS = "Resultados Esperados.txt"
 # Pruebas aleatorias
 
 OPCION_ALEATORIA = "-a"
-CANTIDAD_MUESTRAS = 15
+CANTIDAD_MUESTRAS = 10
 TAMANIO = 10
+
+
+MIN_VALUE = 10
+MAX_VALUE = 1000
+
+
+def arreglo_aleatorio (size: int):
+    return [(random.randint(MIN_VALUE, MAX_VALUE), random.randint(MIN_VALUE, MAX_VALUE)) for _ in range(size)]
 
 
 def comparar_coeficientes(esperado, obtenido, nombre_archivo = ""):
@@ -40,6 +47,8 @@ def test_catedra(archivo):
 
 
 def test_bt (info):
+    print()
+    print(f'Batallas: {info}')
 
     orden_greedy, coeficiente_greedy = orden_batallas(info)
     orden_bt, coeficiente_bt = coeficiente(info)
@@ -66,8 +75,7 @@ if __name__ == "__main__":
     # Prueba aleatoria
     elif opcion == OPCION_ALEATORIA:
         for i in range(CANTIDAD_MUESTRAS):
-            archivo = generar_set_aleatorio(TAMANIO)
-            test_bt(obtener_info_batallas(archivo))
+            test_bt(arreglo_aleatorio(TAMANIO))
 
             
         

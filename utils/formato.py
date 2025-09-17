@@ -2,8 +2,8 @@ TEXTO_BATALLAS = "Batallas en orden"
 TEXTO_COEFICIENTE = "Coeficiente obtenido"
 
 
-def imprimir_batallas (batallas : list, coeficiente : int, file = None):
-    if file is None:
+def imprimir_batallas (batallas : list, coeficiente : int, archivo = None):
+    if archivo is None:
         print()
         print(f'\033[92m{TEXTO_BATALLAS} (bi, ti) \033[0m')
         print(batallas)
@@ -12,8 +12,8 @@ def imprimir_batallas (batallas : list, coeficiente : int, file = None):
         print(coeficiente)
         print()
     else:
-        with open(file, "w") as file:
-            file.writelines([
+        with open(archivo, "w") as archivo:
+            archivo.writelines([
                 TEXTO_BATALLAS + "\n",
                 f'{batallas}\n',
                 TEXTO_COEFICIENTE + "\n",

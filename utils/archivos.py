@@ -7,7 +7,7 @@ def obtener_coeficiente(archivo, archivo_resultados):
         linea = linea.split(",")
         if linea[0] == archivo:
             archivo_resultados.close()
-            return int(linea[1][:-1])
+            return int(linea[1][:-1]) 
     archivo_resultados.close()
 
 

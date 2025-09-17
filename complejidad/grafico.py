@@ -6,12 +6,11 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from random import seed
 from tp1 import orden_batallas
 from matplotlib import pyplot as plt
-from complejidad.math import n_logn
 import seaborn as sns
 import numpy as np
 import scipy as sp
 from complejidad.util import time_algorithm
-from utils.generar_sets_datos import get_random_array, get_array_with_fixed_value
+from utils.generar_arreglos import obtener_arreglo
 
 
 CANTIDAD_MUESTRAS = 35
@@ -20,26 +19,29 @@ N_MAX = 100000
 EJECUCIONES_ERROR = 25
 
 
-sns.set_theme()
+
+def n_logn(n, coeficiente_1, coeficiente_2):
+    return coeficiente_1 * n * np.log(n) + coeficiente_2
 
 
-def obtener_resultados(sizes, get_array_function):
-    return time_algorithm(orden_batallas, sizes, lambda s: [get_array_function(s)])
+def obtener_resultados(tamanios, fn):
+    return time_algorithm(orden_batallas, tamanios, lambda s: [fn(s)])
 
 
-def error_cuadratico_total(results, c, x):
-    return np.sum((c[0] * x * np.log(x) + c[1] - [results[n] for n in x])**2)
+def error_cuadratico_total(resultados, c, x):
+    return np.sum((c[0] * x * np.log(x) + c[1] - [resultados[n] for n in x])**2)
 
 
-def graficar(x, results, error=False):
+
+def graficar(x, resultados, error=False):
 
     ax: plt.Axes
     fig, ax = plt.subplots()
 
-    c, pcov = sp.optimize.curve_fit(n_logn, x, [results[n] for n in x])
+    c, pcov = sp.optimize.curve_fit(n_logn, x, [resultados[n] for n in x])
 
     if error:
-        errors = [np.abs(c[0] * n * np.log(n) + c[1] - results[n]) for n in x]
+        errors = [np.abs(c[0] * n * np.log(n) + c[1] - resultados[n]) for n in x]
 
         ax.plot(x, errors)
 
@@ -49,7 +51,7 @@ def graficar(x, results, error=False):
 
     else:
 
-        ax.scatter(x, [results[i] for i in x], label="Medición")
+        ax.scatter(x, [resultados[i] for i in x], label="Medición")
         ax.set_title('Tiempo de ejecución del algoritmo')
         ax.set_xlabel('Tamaño del array')
         ax.set_ylabel('Tiempo de ejecución (s)')
@@ -59,7 +61,7 @@ def graficar(x, results, error=False):
         fig
 
 
-    r = error_cuadratico_total(results, c, x)
+    r = error_cuadratico_total(resultados, c, x)
 
     print(f"c_1 = {c[0]}, c_2 = {c[1]}")
     print(f"Error cuadrático total: {r}")
@@ -69,9 +71,9 @@ def graficar(x, results, error=False):
 
 def graficar_tiempo_y_error(sizes, fn):
 
-    results = obtener_resultados(sizes, fn)
-    graficar(sizes, results)  # Grafico tiempo de ejecucion
-    graficar(sizes, results, error=True)  # Grafico error
+    resultados = obtener_resultados(sizes, fn)
+    graficar(sizes, resultados)  # Grafico tiempo de ejecucion
+    graficar(sizes, resultados, error=True)  # Grafico error
 
 
 def error_cuadratico_para_varias_muestras(sizes, fn):
@@ -79,9 +81,9 @@ def error_cuadratico_para_varias_muestras(sizes, fn):
 
     for i in range(EJECUCIONES_ERROR):
 
-        results = obtener_resultados(sizes, fn)
-        c, pcov = sp.optimize.curve_fit(n_logn, sizes, [results[n] for n in sizes])
-        error = error_cuadratico_total(results, c, sizes)
+        resultados = obtener_resultados(sizes, fn)
+        c, pcov = sp.optimize.curve_fit(n_logn, sizes, [resultados[n] for n in sizes])
+        error = error_cuadratico_total(resultados, c, sizes)
         print(f'Error ejecucion {i + 1}: {error}')
         if max is None or error > max:
             max = error
@@ -89,9 +91,14 @@ def error_cuadratico_para_varias_muestras(sizes, fn):
     print(f'Error cuadratico maximo: {max}')
 
 
+
+
+
 if __name__ == '__main__':
+    
+    sns.set_theme()
 
-    sizes: np.ndarray = np.linspace(N_MIN, N_MAX, CANTIDAD_MUESTRAS).astype(int)
+    tamanios: np.ndarray = np.linspace(N_MIN, N_MAX, CANTIDAD_MUESTRAS).astype(int)
 
-    # error_cuadratico_para_varias_muestras(sizes, get_array_with_fixed_value)
-    graficar_tiempo_y_error(sizes, get_array_with_fixed_value)
+    fn = obtener_arreglo((10, 1000), (10, 1000))
+    graficar_tiempo_y_error(tamanios, fn)

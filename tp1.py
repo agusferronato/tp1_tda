@@ -1,6 +1,6 @@
 import sys
-from utils.files_handle import obtener_info_batallas
-from utils.format import imprimir_batallas
+from utils.archivos import obtener_info_batallas
+from utils.formato import imprimir_batallas
 
 
 # Algoritmo

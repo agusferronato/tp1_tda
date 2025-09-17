@@ -3,8 +3,7 @@ import os
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-
-from tp1 import calculo_coeficiente, orden_batallas
+from tp1 import calculo_coeficiente
 
 
 def coeficiente_bt (batallas, indice, solucion_actual : list, mejor_solucion):
