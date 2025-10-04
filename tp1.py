@@ -31,3 +31,5 @@ if __name__ == "__main__":
         print("Error: no se ha encontrado el archivo")
     except (IndexError):
         print("Error: Debe pasar como primer parametro el nombre del archivo")
+
+
