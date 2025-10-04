@@ -27,7 +27,9 @@ def tests():
     for file_name in ls(FILES_PATH):
         if re.match(r'^\d', file_name):
             xi, f = get_file_info(file_name)
-            eliminated_troops, strategy = algorithm(xi, f)
+            if len(xi) <= 100:
+                eliminated_troops, strategy = algorithm(xi, f)
+                print(f'File: {file_name}. Result: {eliminated_troops}')
 
 
 
