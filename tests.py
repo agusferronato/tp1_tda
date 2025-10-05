@@ -1,35 +1,19 @@
-from pathlib import Path
+from utils.files import get_expected_results, get_file_info, ls, FILES_PATH
 import re 
 from tp2 import algorithm
+from utils.tests_format import tests_format
 
-
-FILES_PATH = "./files"
-
-
-def get_file_info(file_name):
-    xi = []
-    f = []
-    
-    with open(f'{FILES_PATH}/{file_name}', "r+") as file:
-        info = file.readlines()
-        n = int(info[1])
-        xi = [int(info[i].strip()) for i in range(2, n + 2)]
-        f = [int(info[i].strip()) for i in range(n + 2, 2 * (n + 1))]
-    
-    return xi, f
-
-
-def ls(ruta = Path.cwd()):
-    return [arch.name for arch in Path(ruta).iterdir() if arch.is_file()]
 
 
 def tests():
+    sequence_expected, eliminated_troops_expected = get_expected_results()
+
     for file_name in ls(FILES_PATH):
         if re.match(r'^\d', file_name):
             xi, f = get_file_info(file_name)
-            if len(xi) <= 100:
-                eliminated_troops, strategy = algorithm(xi, f)
-                print(f'File: {file_name}. Result: {eliminated_troops}')
+            eliminated_troops, strategy = algorithm(xi, f)
+            
+            tests_format(file_name, eliminated_troops, eliminated_troops_expected)
 
 
 
