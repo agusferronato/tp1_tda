@@ -12,9 +12,7 @@ def tests():
         if re.match(r'^\d', file_name):
             xi, f = get_file_info(file_name)
             eliminated_troops, strategy = algorithm(xi, f)
-            
-            tests_format(file_name, eliminated_troops, eliminated_troops_expected)
-
+            tests_format(file_name, eliminated_troops, eliminated_troops_expected, strategy, sequence_expected)
 
 
 if __name__ == "__main__":
