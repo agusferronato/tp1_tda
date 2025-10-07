@@ -1,3 +1,7 @@
+import sys
+from utils.files import get_file_info, print_format
+
+
 def reconstruction (xi, f, OPT):
     index = len(xi)
     solution = []
@@ -32,4 +36,14 @@ def algorithm (xi, f):
 
 
 if __name__ == "__main__":
-    pass 
+    try:
+        path = sys.argv[1]
+        xi, f = get_file_info(path)
+        eliminated_troops, strategy = algorithm(xi, f)        
+
+        print_format(eliminated_troops, strategy)
+
+    except (FileNotFoundError):
+        print("Error: no se ha encontrado el archivo")
+    except (IndexError):
+        print("Error: Debe pasar como primer parametro el nombre del archivo") 
