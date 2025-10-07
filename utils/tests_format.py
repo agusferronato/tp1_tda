@@ -1,18 +1,25 @@
 LINES = 30
 MAX_ELEMENTS_SEQUENCE = 50
+WAIT = "Cargar"
+ATTACK = "Atacar"
 
 
-def find_first_mismatch (strategy, sequence_expected):
+def valid_strategy (strategy, eliminated_troops, xi, f):
+    wait = 0
+    value = 0
 
-    for i in range(1, len(strategy)):
-        if strategy[i] != sequence_expected[i]:
-            print(f"\033[1m\033[31mAt element {i}. Expected value: {sequence_expected[i]}. Obtained value: {strategy[i]}\033[0m")
+    for i in range(len(xi)):
+        if strategy[i] == WAIT:
+            wait += 1
+        else:
+            value += min(xi[i], f[wait])
+            wait = 0
+
+    return eliminated_troops == value
 
 
 
-
-
-def tests_format (file_name, eliminated_troops, eliminated_troops_expected, strategy, sequence_expected):
+def tests_format (file_name, eliminated_troops, eliminated_troops_expected, strategy, xi, f):
     print("-" * LINES)
     print(f'\033[1mFile: {file_name}\033[0m')
 
@@ -22,23 +29,19 @@ def tests_format (file_name, eliminated_troops, eliminated_troops_expected, stra
     print(f'Expected value: {eliminated_troops_expected[file_name]}')
 
 
+
     print("-" * LINES)
     print("\033[1mSequence\033[0m")
+
     if len(strategy) > MAX_ELEMENTS_SEQUENCE:
-        print(f'Obtained value: {strategy[:MAX_ELEMENTS_SEQUENCE]} ...')
-        print(f'Expected value: {sequence_expected[file_name][:MAX_ELEMENTS_SEQUENCE]} ...')
+        print(f'Obtained sequence: {strategy[:MAX_ELEMENTS_SEQUENCE]} ...')
     else:
-        print(f'Obtained value: {strategy}')
-        print(f'Expected value: {sequence_expected[file_name]}')
+        print(f'Obtained sequence: {strategy}')
 
 
-    same_strategy = strategy == sequence_expected[file_name]
-    if eliminated_troops == eliminated_troops_expected[file_name] and same_strategy:
+    if eliminated_troops == eliminated_troops_expected[file_name] and valid_strategy(strategy, eliminated_troops, xi, f):
         print("\033[1m\033[32m✅​ Passed\033[0m")
     else:
         print("\033[1m\033[31m❌​ Failed\033[0m")
-        if not same_strategy:
-            print()
-            find_first_mismatch(strategy, sequence_expected[file_name])
 
     print()

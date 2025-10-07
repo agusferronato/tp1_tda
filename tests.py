@@ -6,13 +6,13 @@ from utils.tests_format import tests_format
 
 
 def tests():
-    sequence_expected, eliminated_troops_expected = get_expected_results()
+    _, eliminated_troops_expected = get_expected_results()
 
     for file_name in ls(FILES_PATH):
         if re.match(r'^\d', file_name):
             xi, f = get_file_info(file_name)
             eliminated_troops, strategy = algorithm(xi, f)
-            tests_format(file_name, eliminated_troops, eliminated_troops_expected, strategy, sequence_expected)
+            tests_format(file_name, eliminated_troops, eliminated_troops_expected, strategy, xi, f)
 
 
 if __name__ == "__main__":

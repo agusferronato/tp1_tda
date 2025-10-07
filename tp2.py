@@ -1,7 +1,4 @@
-
-
 def reconstruction (xi, f, OPT):
-
     index = len(xi)
     solution = []
 
@@ -11,8 +8,8 @@ def reconstruction (xi, f, OPT):
                 solution.append("Atacar")
                 solution.extend(["Cargar"] * (j - 1))
                 index -= j
-                break  
-
+                break 
+             
     solution.reverse()
     return solution
 
