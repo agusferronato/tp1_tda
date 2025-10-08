@@ -3,6 +3,7 @@ from pathlib import Path
 EXPECTED_RESULTS_FILE = "Resultados Esperados.txt"
 FILES_PATH = "./files"
 OUTPUT_PATH = "./output"
+DATA_SETS_PATH = "./sets"
 
 STRATEGIES_BY_LINE = 4
 
@@ -18,6 +19,10 @@ def get_file_info(file):
         f = [int(info[i].strip()) for i in range(n + 2, 2 * (n + 1))]
     
     return xi, f
+
+
+def get_file_info_by_size(size):
+    return get_file_info(f'{DATA_SETS_PATH}/{size}.txt')
 
 
 
@@ -45,9 +50,6 @@ def print_format(eliminated_troops, strategy):
                 counter += 1
 
         file.write("\n")
-
-
-
 
 
 

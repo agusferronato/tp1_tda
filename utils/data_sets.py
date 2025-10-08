@@ -1,5 +1,6 @@
 import os
-import random 
+import random
+import numpy as np 
 
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -32,6 +33,7 @@ def generate_xi (size):
 
 
 def generate_f (size):
+    # arr = [int(np.log(i)) for i in range(1, size + 1)]
     arr = sorted(generate_random_arr(size, MIN_F_NUMBER, MAX_F_NUMBER))
     return convert_to_file_format(arr)
 

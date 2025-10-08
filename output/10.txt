@@ -1,0 +1,7 @@
+Eliminated troops:
+2766
+
+Strategy:
+Cargar, Atacar, Cargar, Atacar, 
+Cargar, Atacar, Cargar, Atacar, 
+Cargar, Atacar, 
