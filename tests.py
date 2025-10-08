@@ -1,8 +1,7 @@
 from utils.files import get_expected_results, get_file_info, ls, FILES_PATH
-import re 
+import re
 from tp2 import algorithm
 from utils.tests_format import tests_format
-
 
 
 def tests():
