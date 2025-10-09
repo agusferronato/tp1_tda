@@ -39,9 +39,9 @@ def generate_f (size):
 
 
 # The dataset has the same structure as the files specified in /files
-def generate_data_set (size):
+def generate_data_set (size, path=SETS_PATH, index=""):
 
-    with open(f'{SETS_PATH}/{size}.txt', "w") as file:
+    with open(f'{path}/{size}{index}.txt', "w") as file:
         
         file.write("\n") # header
         file.write(f'{size}\n') 
