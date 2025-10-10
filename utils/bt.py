@@ -12,7 +12,6 @@ from data_sets import generate_data_set
 
 NUM_FILES = 10
 FILE_SIZE = 10
-PARENTHESIS_POSITION = 1
 
 
 def algorithm_by_bf (xi, f, index, last_attack, current_solution, best_solution):
@@ -47,8 +46,7 @@ if __name__ == "__main__":
     for file_name in ls(FILES_PATH):
         if re.match(rf'^{FILE_SIZE}\D', file_name):
             try:
-                file_name.index("(")
-                current_index = int(file_name[PARENTHESIS_POSITION + 1:file_name.index(")")])
+                current_index = int(file_name[file_name.index("(") + 1:file_name.index(")")])
                 if current_index > max_index:
                     max_index = current_index
             except:
