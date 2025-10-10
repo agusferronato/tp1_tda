@@ -14,9 +14,9 @@ from utils.data_sets import generate_data_set
 from utils.files import get_file_info_by_size
 
 
-SAMPLES = 10
-N_MIN = 50
-N_MAX = 1500
+SAMPLES = 25
+N_MIN = 1000
+N_MAX = 10000
 
 
 def square(n, c1, c2):
@@ -66,7 +66,6 @@ def graph_time(x, function, results):
     r = quadratic_error(results, c, x, function)
 
     print(f"c_1 = {c[0]}, c_2 = {c[1]}")
-    print(f"Error cuadrático total: {r}")
 
     plt.show()
 
