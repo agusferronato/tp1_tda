@@ -39,7 +39,6 @@ if __name__ == "__main__":
         path = sys.argv[1]
         xi, f = get_file_info(path)
         eliminated_troops, strategy = algorithm(xi, f)
-
         print_format(eliminated_troops, strategy)
 
     except (FileNotFoundError):
