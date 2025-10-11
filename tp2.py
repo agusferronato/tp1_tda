@@ -29,9 +29,38 @@ def algorithm(xi: list[int], f: list[int]) -> tuple[int, list[str]]:
             current_value = OPT[i - j] + min(f[j - 1], xi[i - 1])
             if max_value < current_value:
                 max_value = current_value
-        OPT[i] = max_value
+        OPT[i] = max_value 
 
     return OPT[n], reconstruction(xi, f, OPT)
+
+
+
+def alternative_algorithm(xi: list[int], f: list[int]) -> tuple[int, list[str]]:
+
+    n: int = len(xi)
+    OPT: list[int] = [0] * (n + 1)
+    OPT_max: list[int] = [0] * (n + 1)
+    for i in range(1, n + 1):
+        max_value: int = -1
+        t_de_corte: int = -1
+        for j in range(1, i + 1):
+            current_value = OPT[i - j] + min(f[j - 1], xi[i - 1])
+            if max_value < current_value:
+                max_value = current_value
+                t_de_corte = j
+            if f[j - 1] >= xi[i - 1]:
+                current_value = OPT[OPT_max[i - j]] + xi[i - 1]
+                if max_value < current_value:
+                    max_value = current_value
+                    t_de_corte = j
+                break
+
+        OPT[i] = max_value
+        OPT_max[i] = i if OPT[i] >= OPT[OPT_max[t_de_corte]] else OPT_max[t_de_corte]
+
+    return OPT[n], reconstruction(xi, f, OPT)
+
+
 
 
 if __name__ == "__main__":

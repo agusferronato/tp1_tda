@@ -19,6 +19,10 @@ N_MIN = 1000
 N_MAX = 10000
 
 
+def n_three_means(n, c1, c2):
+    return c1 * pow(n, 1.5) + c2
+
+
 def square(n, c1, c2):
     return c1 * n ** 2 + c2
 
@@ -31,6 +35,8 @@ def nlogn(n, c1, c2):
     return c1 * n * np.log(n) + c2
 
 
+def linear(n, c1, c2):
+    return c1 * n + c2
 
 
 
@@ -40,8 +46,6 @@ def get_results(sizes, fn):
 
 def quadratic_error(results, c, x, function):
     return np.sum((function(x, c[0], c[1]) - [results[n] for n in x])**2)
-
-
 
 
 
@@ -99,10 +103,15 @@ def graph_error(x, functions, results):
 
 if __name__ == '__main__':
 
+    # functions = {
+    #     "n^2": square,
+    #     "n^3": cubed,
+    #     "nlogn": nlogn
+    # }
+
     functions = {
-        "n^2": square,
-        "n^3": cubed,
-        "nlogn": nlogn
+        "n": linear,
+        "n^2": square
     }
 
     sns.set_theme()

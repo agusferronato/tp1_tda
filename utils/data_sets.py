@@ -1,5 +1,6 @@
 import os
 import random
+import numpy as np
 
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -8,12 +9,12 @@ os.makedirs(SETS_PATH, exist_ok=True)
 
 MAX_SIZE = 10000
 
-MIN_F_NUMBER = 10
-MAX_F_NUMBER = 15000
+MIN_F_NUMBER = 50
+MAX_F_NUMBER = 2000
 
-MIN_XI_NUMBER = 10
-MAX_XI_NUMBER = 5000
-
+MIN_XI_NUMBER = 3000
+MAX_XI_NUMBER = 10000
+ 
 
 def generate_random_arr (size, min_value, max_value):
     arr = []
