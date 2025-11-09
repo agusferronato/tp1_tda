@@ -4,32 +4,31 @@ from pakku import pakku, SUM_POSITION, SET_POSITION
 import time
 
 
-def algorithm(masters, k):
+def algorithm(masters: list[tuple[str, int]], k: int) -> tuple[int, list[list[tuple[str, int]]]]:
 
     inicio = time.time()
 
-    approximation = pakku(masters, k)
+    masters = sorted(masters, key=lambda master: master[VALUE_POSITION], reverse=True)
 
-    best_sum = 0
-    best_list = []
+    approximation: list[list[tuple[str, int]]] = pakku(masters, k)
+
+    best_sum: int = 0
     for group in approximation:
         best_sum += group[SUM_POSITION] ** 2
-        best_list.append(group[SET_POSITION])
 
-    sum_of_each_set = [0] * k
-    current_list = [[] for _ in range(k)]
-    current_sum = 0 
+    approximation = (best_sum, approximation)
 
-    print(best_list)
+    sum_of_each_set: list[int] = [0] * k
+    current_list: list[list] = [[] for _ in range(k)]
+    current_sum: int = 0
 
-    res =  bt(masters, k, 0, current=[sum_of_each_set, current_list, current_sum], best=(best_sum, best_list))
+    print(approximation[1])
+
+    current = (sum_of_each_set, current_list, current_sum)
+    res = bt(masters, k, 0, current, approximation)
     fin = time.time()
     print("tiempo: " + str(fin - inicio))
-    return res 
-
-
-
-
+    return res
 
 
 if __name__ == "__main__":

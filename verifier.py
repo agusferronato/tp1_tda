@@ -1,6 +1,7 @@
 VALUE_POSITION = 1
 
-def polynomial_verifier(masters, groups, B, k):
+
+def polynomial_verifier(masters, groups, B: int, k: int) -> bool:
 
     if len(groups) != k:
         return False
@@ -9,7 +10,7 @@ def polynomial_verifier(masters, groups, B, k):
         for master in group:
             if master not in masters:
                 return False
-    
+
     total = 0
 
     for group in groups:
@@ -19,7 +20,5 @@ def polynomial_verifier(masters, groups, B, k):
         total += group_sum ** 2
         if total > B:
             return False
-    
-    return True
-    
 
+    return True

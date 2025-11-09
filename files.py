@@ -5,14 +5,14 @@ EXPECTED_RESULTS_FILE = "Resultados Esperados.txt"
 FILES_PATH = "./files"
 
 
-def ls(ruta = Path.cwd()):
+def ls(ruta=Path.cwd()):
     return [arch.name for arch in Path(ruta).iterdir() if arch.is_file()]
 
 
 def get_file_info(file):
     k = 0
     masters = []
-    
+
     with open(file, "r+") as file:
         info = file.readlines()
         k = int(info[1])
@@ -33,7 +33,7 @@ def get_expected_results():
         files_results = file.readlines()
 
         for i in range(1, len(files_results)):
-            
+
             if files_results[i - 1] == "\n":
 
                 file_name = files_results[i].strip("\n")

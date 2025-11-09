@@ -2,11 +2,12 @@ import copy
 
 VALUE_POSITION = 1
 
-def bt (masters, k, index, current, best):
+
+def bt(masters, k: int, index: int, current, best):
 
     sum_of_each_set, current_list, current_sum = current
-    best_sum, best_list = best 
-    
+    best_sum, best_list = best
+
     if len(masters) == index:
         if current_sum < best_sum:
             return current_sum, copy.deepcopy(current_list)
@@ -14,11 +15,9 @@ def bt (masters, k, index, current, best):
     if current_sum >= best_sum:
         return best_sum, best_list
 
-
     master = masters[index]
-    master_value = master[VALUE_POSITION] 
+    master_value = master[VALUE_POSITION]
     visited_values = set()
-
 
     for i in range(k):
         if sum_of_each_set[i] in visited_values:
@@ -32,13 +31,13 @@ def bt (masters, k, index, current, best):
         sum_of_each_set[i] += master_value
         current_sum += sum_of_each_set[i] ** 2
 
+        current = (sum_of_each_set, current_list, current_sum)
+        best = bt(masters, k, index + 1, current, best)
 
-        best = bt(masters, k, index + 1, (sum_of_each_set, current_list, current_sum), best)
-            
         current_sum -= sum_of_each_set[i] ** 2
         sum_of_each_set[i] -= master_value
         current_sum += sum_of_each_set[i] ** 2
 
-        current_list[i].pop()        
+        current_list[i].pop()
 
     return best
