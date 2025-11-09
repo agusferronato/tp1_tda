@@ -8,7 +8,7 @@ def tests():
 
     for file_name in ls(FILES_PATH):
 
-        if re.match(r'^\d', file_name) and file_name == "15_4.txt":
+        if re.match(r'^\d', file_name) and file_name == "20_4.txt":
 
             masters, k = get_file_info(f'{FILES_PATH}/{file_name}')
 
