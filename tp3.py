@@ -1,20 +1,20 @@
 import sys
 from backtracking import bt, VALUE_POSITION, bt_2
-from pakku import pakku, SUM_POSITION, SET_POSITION
+from greedy import pakku, a, Master
 import time
 
 
-def algorithm(masters: list[tuple[str, int]], k: int) -> tuple[int, list[list[tuple[str, int]]]]:
+def algorithm(masters: list[Master], k: int) -> tuple[int, list[list[Master]]]:
 
     inicio = time.time()
 
     masters = sorted(masters, key=lambda master: master[VALUE_POSITION], reverse=True)
 
-    approximation: list[list[tuple[str, int]]] = pakku(masters, k)
+    approximation: list[list[Master]] = pakku(masters, k)
 
     best_sum: int = 0
     for group in approximation:
-        best_sum += group[SUM_POSITION] ** 2
+        best_sum += sum(master[VALUE_POSITION] for master in group) ** 2
 
     approximation = (best_sum, approximation)
 

@@ -1,10 +1,8 @@
 import copy
-import heapq
-
-VALUE_POSITION = 1
+from utils.problem import VALUE_POSITION, Master
 
 
-def bt(masters, k: int, index: int, current, best):
+def bt(masters: list[Master], k: int, index: int, current, best):
 
     sum_of_each_set, current_list, current_sum = current
     best_sum, best_list = best
@@ -44,7 +42,7 @@ def bt(masters, k: int, index: int, current, best):
     return best
 
 
-def bt_2(masters, k: int, index: int, current, best):
+def bt_2(masters: list[Master], k: int, index: int, current, best):
 
     sum_of_each_set, current_list, current_sum, remains = current
     best_sum, best_list = best
