@@ -1,5 +1,5 @@
 import sys
-from backtracking import bt, VALUE_POSITION, bt_2
+from backtracking import bt, VALUE_POSITION
 from pakku import pakku, SUM_POSITION, SET_POSITION
 import time
 
@@ -23,12 +23,10 @@ def algorithm(masters: list[tuple[str, int]], k: int) -> tuple[int, list[list[tu
     current_sum: int = 0
     remains: int = sum(master[VALUE_POSITION] for master in masters)
 
-    print(approximation[1])
-
     current = (sum_of_each_set, current_list, current_sum, remains)
-    res = bt_2(masters, k, 0, current, approximation)
+    res = bt(masters, k, 0, current, approximation)
     fin = time.time()
-    print("tiempo: " + str(fin - inicio))
+    print("tiempo: " + str(round(fin - inicio, 2)) + "s")
     return res
 
 
