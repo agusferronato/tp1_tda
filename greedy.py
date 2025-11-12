@@ -1,5 +1,8 @@
 import heapq
 from utils.problem import VALUE_POSITION, score, Master
+import random
+
+RESTARTS: int = 1000
 
 
 def greedy(masters: list[Master], k: int):
@@ -17,12 +20,24 @@ def greedy(masters: list[Master], k: int):
     return group
 
 
-def a(masters: list[Master], k: int):
-    # aca hacemos nuestra mejor aproximacion
-    # la idea es refinar pakku o usar greedy de otra forma asi tarda menos bt
-    return
-
-
 def pakku(masters: list[Master], k: int):
     masters = sorted(masters, key=lambda master: master[VALUE_POSITION], reverse=True)
     return greedy(masters, k)
+
+
+def approximate(masters: list[Master], k: int):
+    if k >= len(masters):
+        return [[master] for master in masters]
+    best_group = pakku(masters, k)
+    best_sum = score(best_group, k)
+    ordered = sorted(masters, key=lambda m: m[VALUE_POSITION], reverse=True)
+    # multi-start
+    for r in range(RESTARTS):
+        if r > 0:
+            random.shuffle(ordered)
+        groups = greedy(ordered, k)
+        current_sum = score(groups, k)
+        if current_sum < best_sum:
+            best_sum = current_sum
+            best_group = groups
+    return best_group
