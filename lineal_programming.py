@@ -1,45 +1,11 @@
 import pulp
-from pulp import LpAffineExpression as Sumatoria
-
-VALUE_POSITION = 1
-
-
-def clique_maximo(grafo):
-
-    Y = []
-    V = len(grafo)
-    no_adyacentes = {}
-    vertices = grafo.obtener_vertices()
-
-    for i in range(V):
-        Y.append(pulp.LpVariable("Y" + str(i), cat="Binary"))
-        no_adyacentes[i] = []
-        for w in grafo:
-            if w not in grafo.adyacentes(vertices[i]) and w != vertices[i]:
-                no_adyacentes[i].append(vertices.index(w))
-
-    problem = pulp.LpProblem("Clique max", pulp.LpMaximize)
-
-    for i in range(V):
-        problem += pulp.lpSum([ Y[j] for j in no_adyacentes[i] ]) <= (1 - Y[i]) * (V + 1) 
-
-    problem += Sumatoria([(Y[i], 1) for i in range(V)])
-
-    problem.solve()
-
-    resultado = []
-
-    for i in range(V):
-        if pulp.value(Y[i]) == 1:
-            resultado.append(vertices[i])
-
-    return resultado
+from utils.problem import Master, VALUE_POSITION
 
 
 def linear_programming(masters, k):
 
-    M_ij = [] # El maestro i esta en el grupo j
-    E_mkj = [] # Los maestros m y k estan en el grupo j
+    M_ij = []  # El maestro i esta en el grupo j
+    E_mkj = []  # Los maestros m y k estan en el grupo j
     #C_mk = [] # Los maestros m y k estan en el mismo grupo
 
     for i in range(len(masters)):
@@ -91,7 +57,7 @@ def linear_programming(masters, k):
     return int(pulp.value(problem.objective))
 
 
-def linear_programming_2(masters, k):
+def linear_programming_2(masters: list[Master], k: int):
     n = len(masters)
     M = pulp.LpVariable.dicts("M", (range(k), range(n)), cat="Binary")
     Z = pulp.LpVariable.dicts("Z", (range(k), range(n), range(n)), lowBound=0, upBound=1)

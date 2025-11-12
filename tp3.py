@@ -1,5 +1,6 @@
 import sys
-from backtracking import bt, VALUE_POSITION
+from utils.problem import Master, VALUE_POSITION
+from backtracking import bt
 from greedy import pakku, approximate, Master
 import time
 
