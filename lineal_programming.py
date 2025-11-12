@@ -1,134 +1,33 @@
 import pulp
-from utils.problem import Master, VALUE_POSITION
+from utils.problem import VALUE_POSITION
 
 
 def linear_programming(masters, k):
 
-    M_ij = []  # El maestro i esta en el grupo j
-    E_mkj = []  # Los maestros m y k estan en el grupo j
-    #C_mk = [] # Los maestros m y k estan en el mismo grupo
-
-    for i in range(len(masters)):
-        for j in range(k):
-            M_ij.append(pulp.LpVariable(f"M_{i}_{j}", cat="Binary"))
-
-    for i in range(len(masters)):
-        for j in range(len(masters)):
-            for m in range(k):
-                E_mkj.append(pulp.LpVariable(f"E_{i}_{j}_{m}", cat="Binary"))
-
-    # for i in range(len(masters)):
-    #    for j in range(len(masters)):
-    #
-    #         C_mk.append(pulp.LpVariable(f"C_{i}_{j}", cat="Binary"))
-
-    problem = pulp.LpProblem("PTA", pulp.LpMinimize)
-
-    for i in range(len(masters)):
-        problem += pulp.lpSum([M_ij[i * k + j] for j in range(k)]) == 1
-
-    for i in range(len(masters)):
-        for j in range(len(masters)):
-            for m in range(k):
-                problem += M_ij[i*k + m] + M_ij[j*k + m] >= 2 * E_mkj[(i * len(masters) + j) * k + m]
-                problem += M_ij[i*k + m] + M_ij[j*k + m] <= 1 + E_mkj[(i * len(masters) + j) * k + m]
-
-    # for i in range(len(masters)):
-    #    for j in range(len(masters)):
-    #        problem += C_mk[i*len(masters) + j] == pulp.lpSum([ E_mkj[(i * len(masters) + j) * k + m] for m in range(k) ])
-
-
-    # problem += pulp.lpSum(
-    #    C_mk[i*len(masters) + j] * masters[i][VALUE_POSITION] * masters[j][VALUE_POSITION]
-    #    for i in range(len(masters))
-    #    for j in range(len(masters))
-    #)
-
-    problem += pulp.lpSum(
-        E_mkj[(i * len(masters) + j) * k + m]
-        * masters[i][VALUE_POSITION]
-        * masters[j][VALUE_POSITION]
-        for i in range(len(masters))
-        for j in range(len(masters))
-        for m in range(k)
-    )
-
-    problem.solve(pulp.PULP_CBC_CMD(msg=False))
-
-    return int(pulp.value(problem.objective))
-
-
-
-def linear_programming_optimized(masters, k):
-
     n = len(masters)
-
-    M_ij = [[] for _ in range(n)]  # El maestro i esta en el grupo j
-
-    # Los maestros i y m estan en el grupo j
-    E_imj = [
-        [
-            [pulp.LpVariable(f"E_{i}_{m}_{j}", cat="Binary") for j in range(k)]
-            for m in range(i + 1, n)
-        ]
-        for i in range(n)
-    ]
-
-    for i in range(n):
-        for j in range(k):
-            M_ij[i].append(pulp.LpVariable(f"M_{i}_{j}", cat="Binary"))
+    
+    M = pulp.LpVariable.dicts("M", (range(n), range(k)), cat="Binary")
+    E = pulp.LpVariable.dicts("E", (range(n), range(n), range(k)), cat="Binary")
 
     problem = pulp.LpProblem("PTA", pulp.LpMinimize)
 
     for i in range(n):
-        problem += pulp.lpSum([M_ij[i][j] for j in range(k)]) == 1
+        problem += pulp.lpSum(M[i][j] for j in range(k)) == 1
 
     for i in range(n):
         for m in range(i + 1, n):
             for j in range(k):
-                problem += M_ij[i][j] + M_ij[m][j] >= 2 * E_imj[i][m - i - 1][j]
-                problem += M_ij[i][j] + M_ij[m][j] <= 1 + E_imj[i][m - i - 1][j]
+                problem += M[i][j] + M[m][j] >= 2 * E[i][m][j]
+                problem += M[i][j] + M[m][j] <= 1 + E[i][m][j]
+
 
     problem += pulp.lpSum(
-        2
-        * E_imj[i][m - i - 1][j]
-        * masters[i][VALUE_POSITION]
-        * masters[m][VALUE_POSITION]
+        2 * E[i][m][j] * masters[i][VALUE_POSITION] * masters[m][VALUE_POSITION]
         for i in range(n)
         for m in range(i + 1, n)
         for j in range(k)
     ) + sum(master[VALUE_POSITION] ** 2 for master in masters)
-
-
-
-
-
     
-def linear_programming_2(masters: list[Master], k: int):
-    n = len(masters)
-    M = pulp.LpVariable.dicts("M", (range(k), range(n)), cat="Binary")
-    Z = pulp.LpVariable.dicts("Z", (range(k), range(n), range(n)), lowBound=0, upBound=1)
-
-    problem = pulp.LpProblem("PTAgua", pulp.LpMinimize)
-
-    for j in range(len(masters)):
-        problem += pulp.lpSum([M[i][j] for i in range(k)]) == 1
-
-    for i in range(k):
-        for j in range(len(masters)):
-            for r in range(j+1, n):
-                problem += Z[i][j][r] <= M[i][j]
-                problem += Z[i][j][r] <= M[i][r]
-                problem += Z[i][j][r] >= M[i][j] + M[i][r] - 1
-
-    objective_terms = []
-
-    for i in range(k):
-        objective_terms += [masters[j][VALUE_POSITION] ** 2 * M[i][j] for j in range(n)]
-        objective_terms += [2 * masters[j][VALUE_POSITION] * masters[r][VALUE_POSITION] * Z[i][j][r] for j in range(n) for r in range(j+1, n)]
-
-    problem += pulp.lpSum(objective_terms)
-
-    problem.solve(pulp.PULP_CBC_CMD(msg=False))
+    problem.solve(pulp.PULP_CBC_CMD(threads=8, msg=False))
 
     return int(pulp.value(problem.objective))

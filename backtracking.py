@@ -73,4 +73,4 @@ def lower_bound(sum_of_each_set: list[int], remains: int) -> int:
         for i in range(rest):
             sums[i] += 1
 
-    return sum(s ** 2 for s in sums)
+    return sum(s**2 for s in sums)

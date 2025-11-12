@@ -35,7 +35,9 @@ if __name__ == "__main__":
     try:
         path = sys.argv[1]
         algorithm([], int(sys.argv[2]))
-    except (FileNotFoundError):
+    except FileNotFoundError:
         print("Error: no se ha encontrado el archivo")
-    except (IndexError):
-        print("Error: Debe pasar como primer parametro el nombre del archivo y el segundo cantidad de subgrupos")
+    except IndexError:
+        print(
+            "Error: Debe pasar como primer parametro el nombre del archivo y el segundo cantidad de subgrupos"
+        )

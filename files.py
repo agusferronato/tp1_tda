@@ -29,7 +29,7 @@ def get_expected_results():
 
     optimal_value = {}
 
-    with open(f'{FILES_PATH}/{EXPECTED_RESULTS_FILE}', "r+") as file:
+    with open(f"{FILES_PATH}/{EXPECTED_RESULTS_FILE}", "r+") as file:
         files_results = file.readlines()
 
         for i in range(1, len(files_results)):
