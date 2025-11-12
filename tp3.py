@@ -1,6 +1,6 @@
 import sys
 from backtracking import bt, VALUE_POSITION
-from greedy import pakku, a, Master
+from greedy import pakku, approximate, Master
 import time
 
 
@@ -10,7 +10,7 @@ def algorithm(masters: list[Master], k: int) -> tuple[int, list[list[Master]]]:
 
     masters = sorted(masters, key=lambda master: master[VALUE_POSITION], reverse=True)
 
-    approximation: list[list[Master]] = pakku(masters, k)
+    approximation: list[list[Master]] = approximate(masters, k)
 
     best_sum: int = 0
     for group in approximation:
