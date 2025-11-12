@@ -103,16 +103,16 @@ def linear_programming_2(masters, k):
 
     for i in range(k):
         for j in range(len(masters)):
-            for r in range(len(masters)):
+            for r in range(j+1, n):
                 problem += Z[i][j][r] <= M[i][j]
                 problem += Z[i][j][r] <= M[i][r]
-                problem += Z[i][j][r] >= M[i][j] + M[i][r] -1
+                problem += Z[i][j][r] >= M[i][j] + M[i][r] - 1
 
     objective_terms = []
 
     for i in range(k):
         objective_terms += [masters[j][VALUE_POSITION] ** 2 * M[i][j] for j in range(n)]
-        objective_terms += [2 * masters[j][VALUE_POSITION] * masters[r][VALUE_POSITION] * Z[i][j][r] for j in range(n) for r in range(n)]
+        objective_terms += [2 * masters[j][VALUE_POSITION] * masters[r][VALUE_POSITION] * Z[i][j][r] for j in range(n) for r in range(j+1, n)]
 
     problem += pulp.lpSum(objective_terms)
 
