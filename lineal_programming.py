@@ -94,7 +94,7 @@ def linear_programming(masters, k):
 def linear_programming_2(masters, k):
     n = len(masters)
     M = pulp.LpVariable.dicts("M", (range(k), range(n)), cat="Binary")
-    Z = pulp.LpVariable.dicts("Z", (range(k), range(n), range(n)), cat="Binary")
+    Z = pulp.LpVariable.dicts("Z", (range(k), range(n), range(n)), lowBound=0, upBound=1)
 
     problem = pulp.LpProblem("PTAgua", pulp.LpMinimize)
 
