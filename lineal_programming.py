@@ -5,7 +5,7 @@ from utils.problem import VALUE_POSITION
 def linear_programming(masters, k):
 
     n = len(masters)
-    
+    masters.sort(key=lambda master: master[VALUE_POSITION])
     M = pulp.LpVariable.dicts("M", (range(n), range(k)), cat="Binary")
     E = pulp.LpVariable.dicts("E", (range(n), range(n), range(k)), cat="Binary")
 
@@ -20,6 +20,8 @@ def linear_programming(masters, k):
                 problem += M[i][j] + M[m][j] >= 2 * E[i][m][j]
                 problem += M[i][j] + M[m][j] <= 1 + E[i][m][j]
 
+    for i in range(k-1):
+        problem += pulp.lpSum(M[m][i] for m in range(n)) <= pulp.lpSum(M[m][i+1] for m in range(n))
 
     problem += pulp.lpSum(
         2 * E[i][m][j] * masters[i][VALUE_POSITION] * masters[m][VALUE_POSITION]
@@ -27,7 +29,7 @@ def linear_programming(masters, k):
         for m in range(i + 1, n)
         for j in range(k)
     ) + sum(master[VALUE_POSITION] ** 2 for master in masters)
-    
+
     problem.solve(pulp.PULP_CBC_CMD(threads=8, msg=False))
 
     return int(pulp.value(problem.objective))
