@@ -1,8 +1,8 @@
-from files import get_expected_results, get_file_info, ls, FILES_PATH
+from utils.files import get_expected_results, get_file_info, ls, FILES_PATH
 import re
 from utils.problem import score
 from tp3 import algorithm
-from lineal_programming import linear_programming, approximate_linear_programming
+from algorithms.lineal_programming import linear_programming, approximate_linear_programming
 import time
 
 
@@ -11,7 +11,7 @@ def tests():
 
     for file_name in ls(FILES_PATH):
 
-        if re.match(r"^\d", file_name) and file_name == "14_4.txt":
+        if re.match(r"^\d", file_name) and file_name == "20_4.txt":
             start = time.time()
             masters, k = get_file_info(f"{FILES_PATH}/{file_name}")
 
