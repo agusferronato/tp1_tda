@@ -1,23 +1,15 @@
 import sys
 from utils.problem import Master, VALUE_POSITION
-from backtracking import bt
-from greedy import pakku, approximate, Master
+from algorithms.backtracking import bt
+from algorithms.greedy import pakku, approximate, Master
 import time
 
 
-def algorithm(masters: list[Master], k: int) -> tuple[int, list[list[Master]]]:
-
-    inicio = time.time()
+def algorithm(masters, k: int):
 
     masters = sorted(masters, key=lambda master: master[VALUE_POSITION], reverse=True)
 
-    approximation: list[list[Master]] = approximate(masters, k)
-
-    best_sum: int = 0
-    for group in approximation:
-        best_sum += sum(master[VALUE_POSITION] for master in group) ** 2
-
-    approximation = (best_sum, approximation)
+    approximation = pakku(masters, k)
 
     sum_of_each_set: list[int] = [0] * k
     current_list: list[list] = [[] for _ in range(k)]
@@ -26,8 +18,6 @@ def algorithm(masters: list[Master], k: int) -> tuple[int, list[list[Master]]]:
 
     current = (sum_of_each_set, current_list, current_sum, remains)
     res = bt(masters, k, 0, current, approximation)
-    fin = time.time()
-    print("tiempo: " + str(round(fin - inicio, 2)) + "s")
     return res
 
 

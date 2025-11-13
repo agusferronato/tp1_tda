@@ -57,10 +57,6 @@ def approximate_linear_programming(masters, k):
 
     problem.solve(pulp.PULP_CBC_CMD(threads=8, msg=False))
 
-    for i in range(n):
-        for j in range(k):
-            print(M[i][j].value())
-
     set_sum = 0
     for j in range(k):  
         set_sum += sum(masters[i][VALUE_POSITION] * M[i][j].value() for i in range(n)) ** 2

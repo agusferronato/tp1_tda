@@ -7,17 +7,23 @@ RESTARTS: int = 1000
 
 def greedy(masters: list[Master], k: int):
     sums: list[int] = [0] * k
+
     heap = [(0, i) for i in range(k)]
     group: list = [[] for _ in range(k)]
+
     heapq.heapify(heap)
+
     for master in masters:
+
         current_sum, i = heapq.heappop(heap)
         group[i].append(master)
+
         new_sum = current_sum + master[VALUE_POSITION]
         heapq.heappush(heap, (new_sum, i))
+
         sums[i] = new_sum
 
-    return group
+    return score(group, k), group
 
 
 def pakku(masters: list[Master], k: int):
