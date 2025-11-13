@@ -1,8 +1,15 @@
 from pathlib import Path
+import os
+import sys 
+
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+FOLDER = os.path.join(SCRIPT_DIR, "../files")
+os.makedirs(FOLDER, exist_ok=True)
 
 
 EXPECTED_RESULTS_FILE = "Resultados Esperados.txt"
-FILES_PATH = "./files"
+EXPECTED_RESULTS_PATH = os.path.join(FOLDER, EXPECTED_RESULTS_FILE)
 
 
 def ls(ruta=Path.cwd()):
@@ -25,11 +32,11 @@ def get_file_info(file):
     return masters, k
 
 
-def get_expected_results():
+def get_expected_results(path=EXPECTED_RESULTS_PATH):
 
     optimal_value = {}
 
-    with open(f"{FILES_PATH}/{EXPECTED_RESULTS_FILE}", "r+") as file:
+    with open(path, "r+") as file:
         files_results = file.readlines()
 
         for i in range(1, len(files_results)):

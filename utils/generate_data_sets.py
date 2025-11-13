@@ -8,8 +8,8 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from tp3 import algorithm
 
 
-MIN_POWER = 10
-MAX_POWER = 50
+MIN_POWER = 50
+MAX_POWER = 1750
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 FOLDER = os.path.join(SCRIPT_DIR, "../sets")
@@ -57,10 +57,4 @@ def generate_data_sets (size, k):
         file.writelines(lines)
 
     
-if __name__ == "__main__":
-    for size in range(5, 16, 5):
-        for k in range(min(size, 2), size - 2):
-            generate_data_sets(size, k)
-
-
 
