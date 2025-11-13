@@ -2,7 +2,7 @@ from files import get_expected_results, get_file_info, ls, FILES_PATH
 import re
 from utils.problem import score
 from tp3 import algorithm
-from lineal_programming import linear_programming
+from lineal_programming import linear_programming, approximate_linear_programming
 import time
 
 
@@ -11,11 +11,11 @@ def tests():
 
     for file_name in ls(FILES_PATH):
 
-        if re.match(r"^\d", file_name) and file_name == "18_6.txt":
+        if re.match(r"^\d", file_name) and file_name == "14_4.txt":
             start = time.time()
             masters, k = get_file_info(f"{FILES_PATH}/{file_name}")
 
-            best_sum = linear_programming(masters, k)
+            best_sum = approximate_linear_programming(masters, k)
             # best_sum = score(best, k)
 
             if best_sum == optimal_value[file_name]:

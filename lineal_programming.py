@@ -49,13 +49,17 @@ def approximate_linear_programming(masters, k):
         problem += pulp.lpSum(M[i][j] for j in range(k)) == 1
 
     for j in range(k):
-        S[j] = pulp.lpSum(M[i][j] * masters[i][VALUE_POSITION] for i in range(n))
+        S[j] == pulp.lpSum(M[i][j] * masters[i][VALUE_POSITION] for i in range(n))
         problem += major >= S[j]
         problem += minor <= S[j]
 
     problem += major - minor
 
     problem.solve(pulp.PULP_CBC_CMD(threads=8, msg=False))
+
+    for i in range(n):
+        for j in range(k):
+            print(M[i][j].value())
 
     set_sum = 0
     for j in range(k):  
