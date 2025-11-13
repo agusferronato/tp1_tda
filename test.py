@@ -11,7 +11,7 @@ def tests():
 
     for file_name in ls(FILES_PATH):
 
-        if re.match(r"^\d", file_name) and file_name == "15_6.txt":
+        if re.match(r"^\d", file_name) and file_name == "18_6.txt":
             start = time.time()
             masters, k = get_file_info(f"{FILES_PATH}/{file_name}")
 
@@ -23,6 +23,9 @@ def tests():
             else:
                 print(
                     f"⚠️ No paso. Archivo {file_name}. Valor esperado: {optimal_value[file_name]}. Valor obtenido: {best_sum}"
+                )
+                print(
+                    f"Coeficiente entre la solucion optima y la no exacta: {round(optimal_value[file_name] / best_sum, 2)}"
                 )
 
             print(
