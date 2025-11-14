@@ -1,17 +1,15 @@
 import sys
 import os
-import time 
-
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+import time
 
 from tp3 import algorithm as bt
-from algorithms.greedy import pakku
+from algorithms.greedy import pakku, approximate
 from algorithms.lineal_programming import approximate_linear_programming as alp, linear_programming as lp
 from tabulate import tabulate
-from utils.generate_data_sets import generate_data_sets
+from utils.generate_data_sets import generate_data_setsS, generate_data_sets_worst_pakku
 from utils.files import get_file_info, get_expected_results
-from tabulate import tabulate 
-import random
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -35,15 +33,12 @@ def compare_algorithms():
     for algorithm in [alp, lp, bt, pakku]:
         results[algorithm] = {}
 
-
     for size in range(5, 14):
 
         for k in range(2, size - 1):
-        
-            generate_data_sets(size, k)
-    
-    optimal_value = get_expected_results(EXPECTED_RESULTS_PATH)
+            generate_data_setsS(size, k)
 
+    optimal_value = get_expected_results(EXPECTED_RESULTS_PATH)
 
     for size in range(5, 14):
 
@@ -51,14 +46,14 @@ def compare_algorithms():
 
             file = f"{size}_{k}.txt"
             masters, _ = get_file_info(f"{FOLDER}/{file}")
-            
+
             for algorithm in [alp, lp, bt, pakku]:
 
                 print(f"a: {name[algorithm]}, size: {size}, k: {k}")
 
                 if size not in results[algorithm]:
                     results[algorithm][size] = {}
-                    
+
                 results[algorithm][size][k] = []
 
                 start = time.time()
@@ -68,7 +63,6 @@ def compare_algorithms():
                     value = value[0]
 
                 results[algorithm][size][k].append([value, round(time.time() - start, 2), value / optimal_value[file]])
-
 
     values_data = {}
     times_data = {}
@@ -106,8 +100,5 @@ def compare_algorithms():
     print(tabulate(ratio_data, headers=headers, tablefmt="grid"))
 
 
-    
-        
 if __name__ == "__main__":
     compare_algorithms()
-

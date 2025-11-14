@@ -1,11 +1,10 @@
 import sys
 import os
 import random
+from tp3 import algorithm
+
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
-
-from tp3 import algorithm
 
 
 MIN_POWER = 50
@@ -49,7 +48,6 @@ def generate_data_setsS(size, k):
             lines.append("\n")
             lines.append(f"{size}_{k}.txt\n")
             lines.append(f"{optimal_value}\n")
-
 
     with open(EXPECTED_RESULTS_PATH, "w+") as file:
         file.writelines(lines)

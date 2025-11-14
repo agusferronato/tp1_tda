@@ -46,4 +46,4 @@ def approximate(masters: list[Master], k: int):
         if current_sum < best_sum:
             best_sum = current_sum
             best_group = groups
-    return best_group
+    return score(best_group, k), best_group
