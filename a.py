@@ -1,7 +1,7 @@
 from files import get_expected_results, get_file_info, ls, FILES_PATH
 import re
 from utils.problem import score
-from greedy import pakku
+from algorithms.greedy import pakku
 
 
 def tests():

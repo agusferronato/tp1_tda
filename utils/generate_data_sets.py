@@ -55,13 +55,12 @@ def generate_data_setsS(size, k):
         file.writelines(lines)
 
 
-def generate_data_sets_worst_pakku(k_2: int):
-    k: int = k_2 * 2
+def generate_data_sets_worst_pakku(k: int):
     with open(f"{FOLDER}/worst_pakku_{k}.txt", "w") as file:
         file.write(f"\n{k}\n")
-        for i in range(1, k+1):
-            file.write(f", {2*k - i}\n")
-            file.write(f",{2*k - i}\n")
+        for i in range(1, k + 1):
+            file.write(f", {2 * k - i}\n")
+            file.write(f", {2 * k - i}\n")
         file.write(f", {k}\n")
 
     expected_result: int = 9 * (k ** 3)
