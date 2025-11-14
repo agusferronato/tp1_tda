@@ -2,7 +2,10 @@ from utils.files import get_expected_results, get_file_info, ls, FILES_PATH
 import re
 from utils.problem import score
 from tp3 import algorithm
-from algorithms.lineal_programming import linear_programming, approximate_linear_programming
+from algorithms.lineal_programming import (
+    linear_programming,
+    approximate_linear_programming,
+)
 import time
 
 

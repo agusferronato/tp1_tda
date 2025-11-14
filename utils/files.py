@@ -1,6 +1,6 @@
 from pathlib import Path
 import os
-import sys 
+import sys
 
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -32,10 +32,6 @@ def get_file_info(file):
     return masters, k
 
 
-
-
-
-
 def get_expected_results(path=EXPECTED_RESULTS_PATH):
 
     optimal_value = {}
@@ -51,3 +47,4 @@ def get_expected_results(path=EXPECTED_RESULTS_PATH):
                 optimal_value[file_name] = int(files_results[i + 1])
 
     return optimal_value
+

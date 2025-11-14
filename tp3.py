@@ -1,8 +1,7 @@
 import sys
 from utils.problem import Master, VALUE_POSITION
 from algorithms.backtracking import bt
-from algorithms.greedy import pakku, approximate, Master
-import time
+from algorithms.greedy import pakku, approximate
 
 
 def algorithm(masters, k: int):
