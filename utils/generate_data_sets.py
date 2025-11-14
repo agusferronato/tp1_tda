@@ -7,6 +7,10 @@ from tp3 import algorithm
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 
+from tp3 import algorithm
+from utils.files import get_file_info
+
+
 MIN_POWER = 50
 MAX_POWER = 1750
 
@@ -18,7 +22,7 @@ EXPECTED_RESULTS_FILE = "Resultados Esperados.txt"
 EXPECTED_RESULTS_PATH = os.path.join(FOLDER, EXPECTED_RESULTS_FILE)
 
 
-def generate_data_setsS(size, k):
+def generate_data_sets (size, k, generate_optimal_value=True):
 
     masters = []
     lines = []
@@ -29,6 +33,9 @@ def generate_data_setsS(size, k):
             master_power = random.randint(MIN_POWER, MAX_POWER)
             masters.append(("", master_power))
             file.write(f", {master_power}\n")
+
+    if not generate_optimal_value:
+        return
 
     if not os.path.exists(EXPECTED_RESULTS_PATH):
         open(EXPECTED_RESULTS_PATH, "w").close()
@@ -66,3 +73,7 @@ def generate_data_sets_worst_pakku(k: int):
         file.write("\n")
         file.write(f"worst_pakku_{k}.txt\n")
         file.write(f"{expected_result}\n")
+
+        
+def get_file_info_by_size(size): 
+    return get_file_info(f'{FOLDER}/{size}_{size // 2}.txt')
