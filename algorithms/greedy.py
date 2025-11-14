@@ -33,8 +33,11 @@ def pakku(masters: list[Master], k: int):
 
 def approximate(masters: list[Master], k: int):
     if k >= len(masters):
-        return [[master] for master in masters]
-        
+        groups = [[master] for master in masters]
+        return score(groups, k), groups
+    elif k == 1:
+        return score([masters], k), [masters]
+
     ordered = sorted(masters, key=lambda m: m[VALUE_POSITION], reverse=True)
     best_group = pakku(masters, k)
     best_sum = score(best_group, k)
