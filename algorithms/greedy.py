@@ -39,17 +39,15 @@ def approximate(masters: list[Master], k: int):
         return score([masters], k), [masters]
 
     ordered = sorted(masters, key=lambda m: m[VALUE_POSITION], reverse=True)
-    best_group = pakku(masters, k)
-    best_sum = score(best_group, k)
+    best_sum, best_group = pakku(masters, k)
 
     # multi-start
     for r in range(RESTARTS):
         if r > 0:
             random.shuffle(ordered)
-        groups = greedy(ordered, k)
-        current_sum = score(groups, k)
+        current_sum, groups = greedy(ordered, k)
         if current_sum < best_sum:
             best_sum = current_sum
             best_group = [list(g) for g in groups]
 
-    return score(best_group, k), best_group
+    return best_sum, best_group
