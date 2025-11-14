@@ -1,4 +1,4 @@
-#!/home/agusfer/Escritorio/FIUBA/TDA/tp1/.venv/bin/python3.12
+#!/home/agusfer/Escritorio/FIUBA/TDA/tp1/.venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
