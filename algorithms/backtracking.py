@@ -10,6 +10,9 @@ def bt(masters: list[Master], k: int, index: int, current, best):
         if current_sum < best_sum:
             return current_sum, copy.deepcopy(current_list)
 
+    if current_sum >= best_sum:
+        return best_sum, best_list
+
     if lower_bound(sum_of_each_set, remains) >= best_sum:
         return best_sum, best_list
 

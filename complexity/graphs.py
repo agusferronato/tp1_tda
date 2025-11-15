@@ -4,17 +4,20 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from random import seed
-from algorithms.greedy import pakku as algorithm
+from tp3 import algorithm
 from matplotlib import pyplot as plt 
 import seaborn as sns
 import numpy as np
 import scipy as sp
 from complexity.utils_complexity import time_algorithm
-from utils.generate_data_sets import generate_data_sets, get_file_info_by_size
+from utils.generate_data_sets import get_file_info_by_size, generate_random_data_sets
 
-SAMPLES = 45
-N_MIN = 1000
-N_MAX = 100000
+SAMPLES = 15
+N_MIN = 15
+N_MAX = 30
+
+def exponential(n, c1, c2):
+    return c1 * pow(c2, n)
 
 
 def n_three_means(n, c1, c2):
@@ -52,7 +55,7 @@ def graph_time(x, function, results, function_name):
     ax: plt.Axes
     fig, ax = plt.subplots()
 
-    c, pcov = sp.optimize.curve_fit(function, x, [results[n] for n in x])
+    #c, pcov = sp.optimize.curve_fit(function, x, [results[n] for n in x])
 
     
     ax.scatter(x, [results[i] for i in x], label="Medición")
@@ -60,14 +63,14 @@ def graph_time(x, function, results, function_name):
     ax.set_xlabel('Tamaño del array')
     ax.set_ylabel('Tiempo de ejecución (s)')
 
-    ax.plot(x, [function(n, c[0], c[1]) for n in x], 'r--', label=f"Ajuste {function_name}")
+    # ax.plot(x, [function(n, c[0], c[1]) for n in x], 'r--', label=f"Ajuste {function_name}")
     ax.legend()
     fig
 
 
-    r = quadratic_error(results, c, x, function)
+    #r = quadratic_error(results, c, x, function)
 
-    print(f"c_1 = {c[0]}, c_2 = {c[1]}")
+    #print(f"c_1 = {c[0]}, c_2 = {c[1]}")
 
     plt.show()
 
@@ -108,9 +111,7 @@ if __name__ == '__main__':
     # }
 
     functions = {
-        "n": linear,
-        "nlogn": nlogn,
-        "n^2": square
+        "2^n": exponential,
     }
 
     sns.set_theme()
@@ -118,7 +119,7 @@ if __name__ == '__main__':
     sizes: np.ndarray = np.linspace(N_MIN, N_MAX, SAMPLES).astype(int)
 
     for size in sizes:
-        generate_data_sets(size, size // 2, False)
+        generate_random_data_sets(size, size // 2, False)
 
     fn = get_file_info_by_size
 
@@ -127,4 +128,4 @@ if __name__ == '__main__':
     for function_name, function in functions.items():
         graph_time(sizes, function, results, function_name)
 
-    graph_error(sizes, functions, results)
+    # graph_error(sizes, functions, results)

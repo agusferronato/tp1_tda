@@ -60,6 +60,9 @@ def generate_data_sets(
     with open(f"{folder}/{size}_{k}.txt", "w") as file:
         write_strategy(file, k, size, masters)
 
+    if results_path is None:
+        return 
+
     if not os.path.exists(results_path):
         open(results_path, "w").close()
 
@@ -95,10 +98,14 @@ def generate_worst_pakku(k):
     )
 
 
-def generate_random_data_sets(size, k):
+def generate_random_data_sets(size, k, with_expected_results):
+    results_path = EXPECTED_RESULTS_PATH
+    if not with_expected_results:
+        results_path = None
+
     generate_data_sets(
         FOLDER,
-        EXPECTED_RESULTS_PATH,
+        results_path,
         write_random_strategy,
         optimal_value_random_strategy,
         k,
