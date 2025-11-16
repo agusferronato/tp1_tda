@@ -1,7 +1,8 @@
 import sys
-from utils.problem import Master, VALUE_POSITION
+from utils.problem import VALUE_POSITION
+from utils.files import get_file_info, print_result
 from algorithms.backtracking import bt
-from algorithms.greedy import pakku, approximate
+from algorithms.greedy import pakku
 
 
 def algorithm(masters, k: int):
@@ -23,10 +24,14 @@ def algorithm(masters, k: int):
 if __name__ == "__main__":
     try:
         path = sys.argv[1]
-        algorithm([], int(sys.argv[2]))
+
+        masters, k = get_file_info(path)
+
+        print_result(algorithm(masters, k), len(masters), k)
+
     except FileNotFoundError:
         print("Error: no se ha encontrado el archivo")
     except IndexError:
         print(
-            "Error: Debe pasar como primer parametro el nombre del archivo y el segundo cantidad de subgrupos"
+            "Error: Debe pasar como primer parametro el nombre del archivo"
         )

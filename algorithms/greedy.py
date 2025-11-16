@@ -1,8 +1,5 @@
 import heapq
 from utils.problem import VALUE_POSITION, score, Master
-import random
-
-RESTARTS: int = 1000
 
 
 def greedy(masters: list[Master], k: int):
@@ -31,6 +28,8 @@ def pakku(masters: list[Master], k: int):
     return greedy(masters, k)
 
 
+
+"""
 def approximate(masters: list[Master], k: int):
     if k >= len(masters):
         groups = [[master] for master in masters]
@@ -51,3 +50,4 @@ def approximate(masters: list[Master], k: int):
             best_group = [list(g) for g in groups]
 
     return best_sum, best_group
+"""

@@ -1,5 +1,6 @@
 VALUE_POSITION = 1
-Master = tuple[str, int]  # (name, power)
+NAME_POSITION = 0
+Master = tuple[str, int] 
 
 
 def score(groups, k: int) -> int:

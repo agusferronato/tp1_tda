@@ -1,11 +1,8 @@
 import sys
 import os
 import random
-from tp3 import algorithm
-
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-
 
 from tp3 import algorithm
 from utils.files import get_file_info
@@ -23,6 +20,10 @@ os.makedirs(PAKKU_DATA_SETS, exist_ok=True)
 
 EXPECTED_RESULTS_PATH = os.path.join(FOLDER, "Resultados Esperados.txt")
 EXPECTED_RESULTS_PAKKU_PATH = os.path.join(PAKKU_DATA_SETS, "Resultados Esperados.txt")
+
+
+MIN_SIZE = 5
+MAX_SIZE = 20
 
 
 def write_pakku_strategy(file, k, size, masters=None):
@@ -116,3 +117,14 @@ def generate_random_data_sets(size, k, with_expected_results):
 
 def get_file_info_by_size(size):
     return get_file_info(f"{FOLDER}/{size}_{size // 2}.txt")
+
+
+
+
+
+
+
+if __name__ == "__main__":
+    for size in range(MIN_SIZE, MAX_SIZE):
+        for k in range(2, size - 1):
+            generate_random_data_sets(size, k, True)
